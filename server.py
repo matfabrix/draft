@@ -1,7 +1,7 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 import json
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder=".")
 
 # Load initial data from JSON files
 with open("flight_booking/bookings.json", "r") as f:
@@ -12,6 +12,10 @@ with open("passenger_management/passengers.json", "r") as f:
 
 with open("flight_schedule/flights.json", "r") as f:
     flights_data = json.load(f)
+
+@app.route("/", methods=["GET"])
+def show_html():
+    return send_file("index.html")
 
 # Booking a flight
 @app.route("/book_flight", methods=["POST"])
