@@ -65,5 +65,3 @@ def update_flight_schedule(flight_id, new_schedule):
 
     with open("flights.json", "w") as f:
         json.dump(flights_data, f, indent=4)
-
-# Additional functions as needed

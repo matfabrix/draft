@@ -66,4 +66,3 @@ def make_payment(booking_id, amount):
     with open("bookings.json", "w") as f:
         json.dump(bookings_data, f, indent=4)
 
-# Additional functions as needed
