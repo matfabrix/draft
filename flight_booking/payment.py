@@ -2,6 +2,13 @@
 import json
 
 def process_payment(booking_id, amount):
+    """
+    Processes the payment for a flight booking and updates the bookings.json file.
+
+    Args:
+        booking_id (str): The ID of the booking for which payment is being processed.
+        amount (float): The payment amount.
+    """
     # Code to process payment and update bookings.json
     with open("bookings.json", "r") as f:
         bookings_data = json.load(f)
@@ -13,5 +20,3 @@ def process_payment(booking_id, amount):
 
     with open("bookings.json", "w") as f:
         json.dump(bookings_data, f, indent=4)
-
-# Additional functions as needed

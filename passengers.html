@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Passengers</title>
+</head>
+<body>
+    <h1>Passengers</h1>
+    <ul>
+        {% for passenger in passengers %}
+        <li>{{ passenger.name }} - {{ passenger.passenger_id }} - {{ passenger.age }} - {{ passenger.contact_info }} <button onclick="deletePassenger('{{ passenger.passenger_id }}')">Delete</button></li>
+        {% endfor %}
+    </ul>
+    <form id="addPassengerForm">
+        <h2>Add New Passenger</h2>
+        <label>Name:</label><input type="text" name="name" required>
+        <label>Age:</label><input type="number" name="age" required>
+        <label>Contact Info:</label><input type="text" name="contact_info" required>
+        <input type="submit" value="Add Passenger">
+    </form>
+
+    <script>
+        // JavaScript code to handle adding a new passenger and deleting a passenger
+        document.getElementById("addPassengerForm").onsubmit = function (e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const passenger = {};
+            formData.forEach((value, key) => {
+                passenger[key] = value;
+            });
+
+            fetch("/api/add_passenger", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(passenger),
+            })
+            .then(() => {
+                location.reload();
+            })
+            .catch((error) => {
+                console.error("Error adding passenger:", error);
+            });
+        };
+
+        function deletePassenger(passengerId) {
+            fetch(`/api/delete_passenger/${passengerId}`, {
+                method: "DELETE",
+            })
+            .then(() => {
+                location.reload();
+            })
+            .catch((error) => {
+                console.error("Error deleting passenger:", error);
+            });
+        }
+    </script>
+</body>
+</html>
